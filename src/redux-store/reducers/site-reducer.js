@@ -5,7 +5,7 @@ const initialState = {
       activeSite:null
 }
 
-const siteReducer = ( state = initialState, action )=>{
+function siteReducer( state = initialState, action ){
 
       switch(action.type){
             case SiteActions.SET_SITES:

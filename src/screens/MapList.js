@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {useSelector, useDispatch } from 'react-redux'
 import {  Text, View, FlatList, Button} from 'react-native';
 import {styles} from './../styles/Styles'
@@ -20,7 +20,10 @@ const MapList = ( {navigation})=>{
       const userMaps = useSelector( state =>state.map.mapList)
       
       useEffect(()=>{
+            useCallback( ()=>
             dispatch(mapActions.fetchMaps(memberId))
+            );
+
       },[dispatch, memberId])
 
       

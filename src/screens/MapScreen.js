@@ -41,8 +41,8 @@ const MapScreen = ( {route, navigation})=>{
       const dispatch = useDispatch();
       const laCarte = useRef(null);
       const [mapId, setMapId] = useState(22364);
-      let siteList = useSelector( state=> state.site.siteList);
-      const [currentLocation, setCurrentLocation] = useState({latitude:0,longitude:0});
+     // let siteList = useSelector( state=> state.site.siteList);
+   //   const [currentLocation, setCurrentLocation] = useState({latitude:0,longitude:0});
       const [savePromptVisible, setSavePromptVisible]= useState(false);
       const [defaultRegion, setDefaultRegion] = useState();
       const [coordList, setCoordList] = useState([]);
@@ -65,14 +65,14 @@ const MapScreen = ( {route, navigation})=>{
              } 
       },[route.params?.mapId]);
 
-      useEffect(()=>{
-            let coords = [];
-            for( let i=0; i< siteList.length; i++){
-                  let marker = siteList[i];
-                  coords.push({latitude:marker.Latitude, longitude:marker.Longitude});
-                  setCoordList(coords);
-            }
-      },[siteList]);
+      // useEffect(()=>{
+      //       let coords = [];
+      //       for( let i=0; i< siteList.length; i++){
+      //             let marker = siteList[i];
+      //             coords.push({latitude:marker.Latitude, longitude:marker.Longitude});
+      //             setCoordList(coords);
+      //       }
+      // },[siteList]);
 
       useEffect(()=>{
             if(coordList.length > 0)
@@ -95,17 +95,17 @@ const MapScreen = ( {route, navigation})=>{
                         region={defaultRegion}
                   >
                         {
-                            siteList.map((marker,i )=> {
-                                if(marker.Latitude && marker.Longitude ){
-                                    return (
-                                          <Marker
-                                                title={marker.Name}
-                                                key={i}
-                                                coordinate={{latitude:marker.Latitude, longitude:marker.Longitude}}
-                                          />
-                                          )
-                                    }
-                              })
+                        //     siteList.map((marker,i )=> {
+                        //         if(marker.Latitude && marker.Longitude ){
+                        //             return (
+                        //                   <Marker
+                        //                         title={marker.Name}
+                        //                         key={i}
+                        //                         coordinate={{latitude:marker.Latitude, longitude:marker.Longitude}}
+                        //                   />
+                        //                   )
+                        //             }
+                        //       })
                         }  
 
                   </MapView>

@@ -9,7 +9,7 @@ const initialState = {
 
 };
 
-const mapReducer = ( state = initialState, action )=>{
+function mapReducer( state = initialState, action ){
      
       switch(action.type){
             case SET_MAPS:
