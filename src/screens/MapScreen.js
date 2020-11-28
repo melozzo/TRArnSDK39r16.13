@@ -13,16 +13,10 @@ import * as siteActions from './../redux-store/actions/site-actions';
 import { ListItem, Header } from 'react-native-elements'
 import { Fontisto } from '@expo/vector-icons'; 
 import { Button } from 'react-native-elements';
+import LeftButton from './../components/LeftButton'
 //import AsyncStorage from '@react-native-community/async-storage';
 
-const LeftButtonComponent=(props)=>{
-      const {showList} = props;
-      return <Button
-                  icon={<Fontisto name="nav-icon-list-a" size={24} color="black" />}
-                  title="  Sites"
-                  onPress={() => {showList();} }
-            />
-}
+
 
 const CurrentLocationComponent=(props)=>{
       const {getLocation} = props;
@@ -35,6 +29,9 @@ const CurrentLocationComponent=(props)=>{
                   }}
     />
 }
+
+
+
 
 const MapScreen = ( {route, navigation})=>{
       let memberId=46996;// email white@album pwd snow
@@ -85,7 +82,7 @@ const MapScreen = ( {route, navigation})=>{
       return (
             <View style={styles.screen}>
                   <Header
-                        leftComponent={<LeftButtonComponent  showList={toggleDrawer} />}
+                        leftComponent={<LeftButton  handleClick={toggleDrawer} />}
                         placement="center"
                         centerComponent={{ text: 'My Map', style: { color: '#fff' } }}
                         rightComponent={ <CurrentLocationComponent getLocation={getCurrentLocation}/> }></Header>
@@ -116,6 +113,10 @@ const MapScreen = ( {route, navigation})=>{
       )
 
 
+      function toggleDrawer(){
+            navigation.toggleDrawer();
+      }
+
       async function getStoredMapId() {
             // let value = null;
             // try {
@@ -128,9 +129,7 @@ const MapScreen = ( {route, navigation})=>{
             // }
       }
     
-      function toggleDrawer(){
-            navigation.toggleDrawer();
-      }
+     
 
       async function getCurrentLocation(){
            const LONGITUDE_DELTA=.09;

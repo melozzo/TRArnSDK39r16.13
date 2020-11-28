@@ -1,11 +1,10 @@
-import React, {useCallback, useEffect, useState } from 'react';
+import React, {useEffect } from 'react';
 import {useSelector, useDispatch } from 'react-redux'
 import {  Text, View, FlatList, Button} from 'react-native';
 import {styles} from './../styles/Styles'
 import * as mapActions  from './../redux-store/actions/map-actions'
 import * as siteActions from './../redux-store/actions/site-actions';
 import { ListItem, Header } from 'react-native-elements'
-import Moment from 'moment';
 import { AntDesign } from '@expo/vector-icons'; 
 //import AsyncStorage from '@react-native-community/async-storage';
 
@@ -43,7 +42,7 @@ const MapList = ( {navigation})=>{
                   <Header
                         placement="center"
                         centerComponent={{ text: 'Map List', style: { color: '#fff' } }}
-                        rightComponent={  <AntDesign name="pluscircle" size={34} color="black" />}></Header>
+                        leftComponent={  <AntDesign name="pluscircle" size={34} color="black" />}></Header>
             
                 { maplist.length > 0 &&
                   <FlatList

@@ -1,54 +1,36 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, Button,
-      FlatList} from 'react-native';
-import {styles} from './../styles/Styles'
+import { Text, View} from 'react-native';
+import {styles} from './../styles/Styles';
+import LeftButton from './../components/LeftButton';
+import { Header } from 'react-native-elements';
+
+
 
 const JournalView = ( props)=>{
-      const [goal, setGoal] = useState();
-      const [goalList, setGoalList] = useState([]);
+      
 
-      const handleChangeText=(txt)=>{
-            setGoal(txt);
-      }
-      const handleAddGoal = ( )=>{
-            console.log(goal)
-            setGoalList(goalList=>[...goalList,{id:Math.random().toString() , value:goal}]);
-      } 
+      
 
-  return (
-        <View style={styles.screen}>
-            <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                  <TextInput 
-                        onChangeText = {handleChangeText}
-                        value={goal}
-                        placeholder='you really suck'
-                        style={{
-                              width:200,
-                              borderBottomColor:"black",
-                              borderBottomWidth:1
-                        }}
-                  
+      return (
+            <View style={styles.screen}>
+                  <Header
+                              leftComponent={<LeftButton  handleClick={toggleDrawer} />}
+                              placement="center"
+                              centerComponent={{ text: 'Journal', style: { color: '#fff' } }}
                   />
-                  <Button title="add to list"
-                        onPress= {handleAddGoal}/>
-            </View>
-            <View>
-                        <FlatList
-                              data = {goalList}
-                              keyExtractor={item => item.id}
-                              renderItem={ ( {item} ) =>
-                                   
-                                          <Text>{item.value} </Text> 
-                                    
-                              }
-                        
-                        />
 
-                      
+                  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                        <Text>{'nothing here right now'}</Text>
+                  </View>
             </View>
-        </View>
-   
-  );
+            );
+
+      function toggleDrawer(){
+            navigation.toggleDrawer();
+      }
+
+
+                                    
 }
 
 export default JournalView;

@@ -1,12 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, Image, Button,
-      FlatList} from 'react-native';
+import { View, Image, Button} from 'react-native';
 import {styles} from './../styles/Styles';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
+import { ListItem, Header } from 'react-native-elements';
+import LeftButton from './../components/LeftButton'
 
-const AlbumScreen= ( props)=>{
+
+
+
+
+const AlbumScreen= ( {route, navigation})=>{
 
       const [image, setImage] = useState();
 
@@ -17,6 +22,15 @@ const AlbumScreen= ( props)=>{
 
       return (
             <View style={styles.screen}>
+                  <Header
+                        leftComponent={<LeftButton  handleClick={toggleDrawer} />}
+                        placement="center"
+                        centerComponent={{ text: 'Album', style: { color: '#fff' } }}
+                  />
+                
+                  
+
+
                   <View style={{ height:200, alignItems: 'center', justifyContent: 'center' }}>
                         <Button title="Pick an image from camera roll" onPress={pickImage} />
                         {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
@@ -24,6 +38,11 @@ const AlbumScreen= ( props)=>{
             </View>
       
       )
+
+
+      function toggleDrawer(){
+            navigation.toggleDrawer();
+      }
 
 
       async function getPermissionAsync(){

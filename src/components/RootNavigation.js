@@ -15,128 +15,7 @@ import {useSelector , useDispatch} from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 const SiteListDrawer = createDrawerNavigator();
-const MapStack = createStackNavigator();
-const AlbumStack = createStackNavigator();
-const SiteStack = createStackNavigator();
 
-
-const MapStackComponent = ({ navigation }) =>{
-       return (
-             <MapStack.Navigator initialRouteName="Map">
-                  <MapStack.Screen
-                  name="Map"
-                  component={MapScreen}
-                  options={({ route }) => ({ 
-                        title: 'Map Screen',
-                        headerStyle: {
-                              backgroundColor: '#f4511e',
-                        },
-                        headerTintColor: '#114477',
-                        headerTitleStyle: {
-                              fontWeight: 'bold',
-                        },
-                        headerLeft: () => (
-                              <Button
-                              onPress={() => {
-                              navigation.toggleDrawer();
-                                    }}
-                              title="Info"
-                              color="#113388"
-                              />
-                        ),
-
-                  })}
-                  />
-      </MapStack.Navigator>
-      );
-}
-
-
-const AlbumStackComponent = ({ navigation }) =>{
-      return (
-            <AlbumStack.Navigator initialRouteName="Album">
-                 <AlbumStack.Screen
-                        name="Album"
-                        component={AlbumScreen}
-                        options={({ route }) => ({ 
-                              title: 'Album Screen',
-                              headerStyle: {
-                                    backgroundColor: '#f4511e',
-                              },
-                              headerTintColor: '#114477',
-                              headerTitleStyle: {
-                                    fontWeight: 'bold',
-                              },
-                              headerLeft: () => (
-                                    <Button
-                                    onPress={() => {alert('This is a button!');
-                                    navigation.toggleDrawer();
-                                          }}
-                                    title="Info"
-                                    color="#113388"
-                                    />
-                              ),
-
-                        })}
-                 />
-     </AlbumStack.Navigator>
-     );
-}
-
-const SiteStackComponent = ({ navigation }) =>{
-      return (
-            <SiteStack.Navigator initialRouteName="Site">
-                 <SiteStack.Screen
-                        name="Site"
-                        component={SiteScreen}
-                        options={({ route }) => ({ 
-                              title: 'Site Screen',
-                              headerStyle: {
-                                    backgroundColor: '#f4511e',
-                              },
-                              headerTintColor: '#114477',
-                              headerTitleStyle: {
-                                    fontWeight: 'bold',
-                              },
-                              headerLeft: () => (
-                                    <Button
-                                    onPress={() => {
-                                    navigation.toggleDrawer();
-                                          }}
-                                    title="Site List"
-                                    color="#113388"
-                                    />
-                              ),
-
-                        })}
-                 />
-                 <SiteStack.Screen
-                        name="Calendar"
-                        component={CalendarScreen}
-                        options={({ route }) => ({ 
-                              title: 'Calendar Screen',
-                              headerStyle: {
-                                    backgroundColor: '#f4511e',
-                              },
-                              headerTintColor: '#114477',
-                              headerTitleStyle: {
-                                    fontWeight: 'bold',
-                              },
-                              // headerLeft: () => (
-                              //       <Button
-                              //       onPress={() => {
-                              //       navigation.toggleDrawer();
-                              //             }}
-                              //       title="Site List"
-                              //       color="#113388"
-                              //       />
-                              // ),
-
-                        })}
-                 />
-     </SiteStack.Navigator>
-     );
-}
 
 
 const CustomDrawerContent = (props) =>{
@@ -153,8 +32,6 @@ const CustomDrawerContent = (props) =>{
                                                 label={site.Name? site.Name:""} 
                                                 onPress={   () => props.navigation.navigate("Site",{screen:"Site", params:{siteId:site.SiteID}}) }
                                           />
-                                                
-                                        
                                     )
                               })
                         }
@@ -167,8 +44,8 @@ const TabNavigatorComponent = ( )=>{
             <Tab.Navigator  initialRouteName="Map">
                   <Tab.Screen name="MapList" component={MapList} />
                   <Tab.Screen name="Map" component={MapScreen}/>
-                  <Tab.Screen name="Album" component={AlbumStackComponent} />
-                  <Tab.Screen name="Site" component={SiteStackComponent} />
+                  <Tab.Screen name="Album" component={AlbumScreen} />
+                  <Tab.Screen name="Site" component={SiteScreen} />
                   <Tab.Screen name="Journal" component={JournalView} />
             </Tab.Navigator>
       )
