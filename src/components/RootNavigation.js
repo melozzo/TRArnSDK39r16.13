@@ -9,8 +9,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Button, View, Text } from 'react-native';
 import { createDrawerNavigator, DrawerContentScrollView,  DrawerItemList, DrawerItem } from '@react-navigation/drawer';
-//import * as siteActions from './../redux-store/actions/site-actions';
-//import {useSelector , useDispatch} from 'react-redux';
+import * as siteActions from './../redux-store/actions/site-actions';
+import {useSelector , useDispatch} from 'react-redux';
 
 
 const Tab = createBottomTabNavigator();
@@ -139,28 +139,28 @@ const SiteStackComponent = ({ navigation }) =>{
 }
 
 
-// const CustomDrawerContent = (props) =>{
-//       const dispatch = useDispatch();
-//       let mapId = 22364;
-//       const siteList = useSelector( state =>state.site.siteList);
-//       return (
-//                   <DrawerContentScrollView {...props}>
-//                         {
-//                               siteList.length >0 &&   siteList.map((site,i)=>{
-//                                     return   (
-//                                           <DrawerItem 
-//                                                 key={i}
-//                                                 label={site.Name? site.Name:""} 
-//                                                 onPress={   () => props.navigation.navigate("Site",{screen:"Site", params:{siteId:site.SiteID}}) }
-//                                           />
+const CustomDrawerContent = (props) =>{
+      const dispatch = useDispatch();
+      let mapId = 22364;
+      const siteList = useSelector( state =>state.site.siteList);
+      return (
+                  <DrawerContentScrollView {...props}>
+                        {
+                              siteList.length >0 &&   siteList.map((site,i)=>{
+                                    return   (
+                                          <DrawerItem 
+                                                key={i}
+                                                label={site.Name? site.Name:""} 
+                                                onPress={   () => props.navigation.navigate("Site",{screen:"Site", params:{siteId:site.SiteID}}) }
+                                          />
                                                 
                                         
-//                                     )
-//                               })
-//                         }
-//                   </DrawerContentScrollView>
-//             );
-// }
+                                    )
+                              })
+                        }
+                  </DrawerContentScrollView>
+            );
+}
 
 const TabNavigatorComponent = ( )=>{
       return (
@@ -178,7 +178,7 @@ const Drawer = ()=>{
       return (
                   <SiteListDrawer.Navigator 
                         initialRouteName="Tabs"
-                        // drawerContent={props => <CustomDrawerContent {...props} />}
+                         drawerContent={props => <CustomDrawerContent {...props} />}
                   >
                         <SiteListDrawer.Screen
                               name="Tabs"

@@ -1,7 +1,7 @@
 import * as SiteActions from './../actions/site-actions';
 import { ActionSheetIOS } from 'react-native';
 const initialState = {
-      siteList:["lyon"],
+      siteList:[],
       activeSite:null
 }
 

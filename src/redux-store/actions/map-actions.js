@@ -1,3 +1,4 @@
+import { SET_SITE } from "./site-actions";
 
 export const SET_MAPS = 'SET_MAPS';
 export const SET_MAP = 'SET_MAP';
@@ -38,10 +39,14 @@ export const fetchLastMap = (memberId)=>{
                   type:SET_MAP,
                   map: data
             })
-            // dispatch({
-            //       type:SET_SITES,
-            //       siteList: data.Sites
-            // })
+            dispatch({
+                  type:SET_SITES,
+                  siteList: data.Sites
+            })
+            dispatch({
+                  type:SET_SITE,
+                  site:data.Sites[0]
+            })
       }
 }
 

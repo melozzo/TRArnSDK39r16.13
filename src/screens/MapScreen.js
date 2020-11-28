@@ -41,43 +41,46 @@ const MapScreen = ( {route, navigation})=>{
       const dispatch = useDispatch();
       const laCarte = useRef(null);
       const [mapId, setMapId] = useState(22364);
-     // let siteList = useSelector( state=> state.site.siteList);
+      let siteList = useSelector( state=> state.site.siteList);
    //   const [currentLocation, setCurrentLocation] = useState({latitude:0,longitude:0});
       const [savePromptVisible, setSavePromptVisible]= useState(false);
       const [defaultRegion, setDefaultRegion] = useState();
       const [coordList, setCoordList] = useState([]);
       const [showSpinner, setShowSpinner] = useState(false);
 
-            useEffect(()=>{
-            if(!route.params ){
-                  //setShowSpinner(true)
-                  getCurrentLocation();
-                  //setShowSpinner(false)
-            }
-      },[route.params?.mapId]);
 
       useEffect(()=>{
+            dispatch(siteActions.fetchSites(mapId))
+      },[])
+
+//      useEffect(()=>{
+//             if(!route.params ){
+//                   //setShowSpinner(true)
+//                   getCurrentLocation();
+//                   //setShowSpinner(false)
+//             }
+//       },[route.params?.mapId]);
+
+//       useEffect(()=>{
            
-            if(route.params && route.params.mapId){
-                let id = JSON.stringify(route.params.mapId);
-                 // setShowSpinner(false)
-                  setMapId( parseInt(id) );
-             } 
-      },[route.params?.mapId]);
-
-      // useEffect(()=>{
-      //       let coords = [];
-      //       for( let i=0; i< siteList.length; i++){
-      //             let marker = siteList[i];
-      //             coords.push({latitude:marker.Latitude, longitude:marker.Longitude});
-      //             setCoordList(coords);
-      //       }
-      // },[siteList]);
+//             if(route.params && route.params.mapId){
+//                 let id = JSON.stringify(route.params.mapId);
+//                  // setShowSpinner(false)
+//                   setMapId( parseInt(id) );
+//              } 
+//       },[route.params?.mapId]);
 
       useEffect(()=>{
-            if(coordList.length > 0)
-                  zoomToExtent();
-     },[coordList])
+            let coords = [];
+            for( let i=0; i< siteList.length; i++){
+                  let marker = siteList[i];
+                  coords.push({latitude:marker.Latitude, longitude:marker.Longitude});
+                  setCoordList(coords);
+            }
+            zoomToExtent(coords);
+      },[siteList]);
+
+  
 
       return (
             <View style={styles.screen}>
@@ -95,17 +98,17 @@ const MapScreen = ( {route, navigation})=>{
                         region={defaultRegion}
                   >
                         {
-                        //     siteList.map((marker,i )=> {
-                        //         if(marker.Latitude && marker.Longitude ){
-                        //             return (
-                        //                   <Marker
-                        //                         title={marker.Name}
-                        //                         key={i}
-                        //                         coordinate={{latitude:marker.Latitude, longitude:marker.Longitude}}
-                        //                   />
-                        //                   )
-                        //             }
-                        //       })
+                            siteList.map((marker,i )=> {
+                                if(marker.Latitude && marker.Longitude ){
+                                    return (
+                                          <Marker
+                                                title={marker.Name}
+                                                key={i}
+                                                coordinate={{latitude:marker.Latitude, longitude:marker.Longitude}}
+                                          />
+                                          )
+                                    }
+                              })
                         }  
 
                   </MapView>
@@ -150,7 +153,7 @@ const MapScreen = ( {route, navigation})=>{
                   //setShowSpinner(false);
             }
 
-      function zoomToExtent(){
+      function zoomToExtent(coordList){
             laCarte.current.fitToCoordinates(coordList, {edgePadding: { top:120, right: 20, bottom: 140, left: 20 },
             animated: false});
       }

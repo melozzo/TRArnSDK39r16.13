@@ -12,7 +12,7 @@ import { StyleSheet } from 'react-native';
 
 export default function App() {
      
-      const rootReducer = combineReducers({mapReducer, siteReducer})
+      const rootReducer = combineReducers({map:mapReducer, site:siteReducer})
       const store = createStore(rootReducer, applyMiddleware(thunk))
    
 

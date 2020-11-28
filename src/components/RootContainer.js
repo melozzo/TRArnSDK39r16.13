@@ -8,20 +8,23 @@ const RootContainer = ( props) =>{
       const [siteList, setSiteList ] = useState([]);
       const [photoList, setPhotoList] = useState([]);
       const dispatch = useDispatch();
+
+      // the old way
       // useEffect(()=>{
       //     const map =   DataTransport.getMap(46996);
       //     setSiteList(map.Sites)
       // })
 
-      // useEffect(()=>{
-      //       let memberId=46996;
-      //       dispatch(mapActions.fetchLastMap(46996))
-      // },[])
+      useEffect(()=>{
+            let memberId=46996;
+            dispatch(mapActions.fetchLastMap(memberId))
+      },[])
 
-      return (               <View>
-                                    {props.children}
-                              </View>   
-      )
+      return (             
+                  <View>
+                        {props.children}
+                   </View>   
+            )
 
 }
 

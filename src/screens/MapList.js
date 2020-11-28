@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState } from 'react';
 import {useSelector, useDispatch } from 'react-redux'
 import {  Text, View, FlatList, Button} from 'react-native';
 import {styles} from './../styles/Styles'
@@ -14,35 +14,27 @@ const MapList = ( {navigation})=>{
       
       let memberId=46996;
 
-      //redux use Dispatch Hook
+      const maplist = useSelector( state =>state.map.mapList);
+   
       const dispatch = useDispatch();
-      // redux use Selector Hook - deprecated
-      const userMaps = useSelector( state =>state.map.mapList)
+
       
       useEffect(()=>{
-            useCallback( ()=>
             dispatch(mapActions.fetchMaps(memberId))
-            );
-
-      },[dispatch, memberId])
-
-      
-      
+      },[])
 
       const renderItem = ({ item }) => {
             console.log(item.CreateDate)
             return(
-            
-            <ListItem
-              title={item.MapName}
-              subtitle={Moment(item.CreateDate).format('MM/DD/yyyy')}
-              leftAvatar={{ source: { uri: item.avatar_url } }}
-              bottomDivider
-              chevron
-              onPress={() =>selectMap(item)}
-            />
-      )
-            }
+                  <ListItem
+                  bottomDivider
+                  onPress={() =>selectMap(item)}
+                  >
+                        <ListItem.Title>{item.MapName}</ListItem.Title>
+                        <ListItem.Subtitle>{item.CreateDate}</ListItem.Subtitle>
+                  </ListItem>
+            )
+      }
 
       const keyExtractor = (item, index) => index.toString()
       return (
@@ -53,11 +45,11 @@ const MapList = ( {navigation})=>{
                         centerComponent={{ text: 'Map List', style: { color: '#fff' } }}
                         rightComponent={  <AntDesign name="pluscircle" size={34} color="black" />}></Header>
             
-                { userMaps.length > 0 &&
+                { maplist.length > 0 &&
                   <FlatList
                         style={{width:'100%'}}
                         keyExtractor={keyExtractor}
-                        data={userMaps}
+                        data={maplist}
                         renderItem={renderItem}
                 />
                 }  
@@ -83,7 +75,7 @@ const MapList = ( {navigation})=>{
 export default MapList;
 
 // <FlatList 
-//                         data= {userMaps}
+//                         data= {maplist}
 //                         keyExtractor={item=> item._id}
 //                         renderItem={({ item }) => 
 //                        <ListItem
