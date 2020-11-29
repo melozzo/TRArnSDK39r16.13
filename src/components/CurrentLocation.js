@@ -6,7 +6,7 @@ import { Button } from 'react-native-elements';
 
 const CurrentLocation =(props)=>{
       const {getLocation} = props;
-      return 
+      return (
             <Button
                         iconRight
                         icon={<Fontisto name="map-marker" size={24} color="black" />}
@@ -15,5 +15,6 @@ const CurrentLocation =(props)=>{
                         getLocation();
                                     }}
             />
+      )
 }
 export default CurrentLocation

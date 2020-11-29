@@ -15,12 +15,13 @@ function mapReducer( state = initialState, action ){
             case SET_MAPS:
                  return {
                        mapList:action.maps,
-                       activeMap:state.selectedMap
+                       selectedMap:state.selectedMap
                  }
             case SET_MAP:
+                  console.log("setting map")
                   return {
                         mapList:state.mapList,
-                        selectedMap:action.selectedMap
+                        selectedMap:action.map
                   }
            
             default:

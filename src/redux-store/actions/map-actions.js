@@ -1,3 +1,4 @@
+import { DrawerContentScrollView } from "@react-navigation/drawer";
 
 export const SET_MAPS = 'SET_MAPS';
 export const SET_MAP = 'SET_MAP';
@@ -15,7 +16,7 @@ export const fetchMaps = (memberId)=>{
                   },
             })
             const data = await response.json();
-            console.log('returning maps' ,data)
+           // console.log('returning maps' ,data)
             dispatch({
                   type:SET_MAPS,
                   maps: data
@@ -24,19 +25,25 @@ export const fetchMaps = (memberId)=>{
 }
 
 export const fetchLastMap = (memberId)=>{ 
+      console.log('fetching last for ' ,memberId)
       return async dispatch =>{
-       const response = await fetch(`${baseURL}/map/last/${memberId}`,
-            {
-                  method:'GET',
-                  headers:{
-                        'Content-Type':'application/json'
-                  },
-            })
-            const data = await response.json();
+            const response = await fetch(`${baseURL}/map/last/${memberId}`,
+                  {
+                        method:'GET',
+                        headers:{
+                              'Content-Type':'application/json'
+                        },
+                  });
+
+            if( ! response.ok){
+                  console.log('error getting last map', response)
+            }
+                  const lastmap = await response.json();
+                  console.log('returning last map', lastmap)
            
             dispatch({
                   type:SET_MAP,
-                  map: data
+                  selectedMap: lastmap
             })
            
       }

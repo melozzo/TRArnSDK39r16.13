@@ -2,7 +2,7 @@ export const LOGIN = 'LOGIN';
 export const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
 export const CREATE_ACCOUNT = 'CREATE_ACCOUNT';
 
-
+//  let memberId=46996;// email white@album pwd snow
 const baseURL= 'http://138.68.12.0:8080';      // 'http://localhost:7070';
 
 export const login = (email, password)=>{ 

@@ -3,7 +3,6 @@ import {useSelector, useDispatch } from 'react-redux'
 import {  Text, View, FlatList, Button} from 'react-native';
 import {styles} from './../styles/Styles'
 import * as mapActions  from './../redux-store/actions/map-actions'
-import * as siteActions from './../redux-store/actions/site-actions';
 import { ListItem, Header } from 'react-native-elements'
 import { AntDesign } from '@expo/vector-icons'; 
 //import AsyncStorage from '@react-native-community/async-storage';

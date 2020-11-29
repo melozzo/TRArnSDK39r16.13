@@ -22,10 +22,8 @@ import CurrentLocation from './../components/CurrentLocation'
 
 
 const MapScreen = ( {route, navigation})=>{
-      let memberId=46996;// email white@album pwd snow
       const dispatch = useDispatch();
       const laCarte = useRef(null);
-
       const selectedMap = useSelector( state => state.map.selectedMap)
       let siteList = useSelector( state=> state.site.siteList);
 
@@ -36,11 +34,11 @@ const MapScreen = ( {route, navigation})=>{
       const [showSpinner, setShowSpinner] = useState(false);
 
 
-      useEffect(()=>{
-            if(selectedMap === undefined)
-                  return;
-            dispatch(siteActions.fetchSites(selectedMap.MapID))
-      },[selectedMap])
+      // useEffect(()=>{
+      //   if ( !selectedMap.MapID)
+      //       return;
+      //       dispatch(siteActions.fetchSites(selectedMap.MapID))
+      // },[selectedMap])
 
 //      useEffect(()=>{
 //             if(!route.params ){

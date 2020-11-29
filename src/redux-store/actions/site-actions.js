@@ -5,7 +5,7 @@ const baseURL= 'http://138.68.12.0:8080';  //'http://localhost:7070'
 
 export const fetchSites = (mapId)=>{ 
       return async dispatch =>{
-
+            console.log('fetching sites for', mapId)
        try{     
                   const response = await fetch(`${baseURL}/site/list/${mapId}`,
                   {

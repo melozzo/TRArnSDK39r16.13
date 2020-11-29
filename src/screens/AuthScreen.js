@@ -1,45 +1,70 @@
 import React, {useState, useEffect } from 'react';
 import {View} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux'
-import { ButtonGroup}  from 'react-native-elements';
-import { TextInput } from 'react-native'
+import { ButtonGroup, Input, Header}  from 'react-native-elements';
 import { Fontisto } from '@expo/vector-icons'; 
 import * as AuthActions from './../redux-store/actions/auth-actions'
+import * as MapActions from './../redux-store/actions/map-actions';
 
 
-
-const AuthScreen = ( props )=>{
+const AuthScreen = ( {route, navigation} )=>{
 
       const authenticatedMember = useSelector(state =>state.auth.authenticatedMember);
-      const buttons = ['Login','Create Account']
+      const buttons = ['Login','Create Account', 'Skip']
       const dispatch = useDispatch();
       const [email, setEmail] = useState('');
       const [password, setPassword] = useState('');
+      const selectedMap = useSelector( state => state.map.selectedMap)
+
+      useEffect(()=>{
+            if ( ! authenticatedMember )
+                   return;
+          
+            MapActions.fetchLastMap(authenticatedMember.MemberID)
+           
+ 
+       },[authenticatedMember]);
+
+       useEffect(()=>{
+             if( ! selectedMap.MapID)
+                  return;
+            navigation.navigate("Tabs")
+       })
 
       return (
-            <View style={{display:'flex', alignItems:'center', flexDirection:'column'}}>
+            <View style={{display:'flex', alignItems:'center', flexDirection:'column', paddingTop:26}}>
+                
                  <View style={{display:'flex',flexDirection:'row'}}>
-                 <Fontisto
+                 
+                  <Input
+                        autoCapitalize = 'none'
+                        label="email"
+                        rightIcon={
+                              <Fontisto
                                     name='email'
                                     size={24}
                                     color='black'
+                                    style={{marginRight:10}}
                               />
-                  <TextInput
-                        autoCapitalize = 'none'
-                        style={{ width: 200, height: 30, borderColor: 'gray', borderWidth: 1 }}
+                        }
                         value = {email}
                         onChange = {syntheticEvent => setEmail(syntheticEvent.nativeEvent.text)}
                         />
             </View>
             <View style={{display:'flex', flexDirection:'row'}}>
-                  <Fontisto
-                              name='locked'
-                              size={24}
-                              color='black'
-                        />
-                  <TextInput
+                  
+                  <Input
                         autoCapitalize = 'none'
-                        style={{width:200, height: 30, borderColor:'gray', borderWidth: 1}}
+                        label = 'password'
+                        secureTextEntry={true}
+                        rightIcon={
+                              <Fontisto
+                                    name='locked'
+                                    size={24}
+                                    color='black'
+                                    style={{marginRight:10}}
+                              />
+                        }
                         value={password}
                         onChange = { e=>setPassword(e.nativeEvent.text)  }
                   />
@@ -62,7 +87,7 @@ const AuthScreen = ( props )=>{
       function handleButtonClick( index ){
             switch(index){
                   case 0:
-                        alert(`email:${email} password:${password}`)
+                      
                         dispatch( AuthActions.login(email, password))
 
                   break;

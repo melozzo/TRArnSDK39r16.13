@@ -3,7 +3,7 @@ import * as AuthActions from '../actions/auth-actions';
 
 
 const initialState = {
-      authenticatedMember:46996
+      authenticatedMember: null
 }
 
 function memberReducer( state = initialState, action ){

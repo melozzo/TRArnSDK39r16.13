@@ -1,24 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import AlbumScreen from '../screens/AlbumScreen';
 import MapScreen from '../screens/MapScreen';
 import SiteScreen from '../screens/SiteScreen';
 import JournalView from '../screens/JournalView';
-import MapList from '../screens/MapList'
+import MapList from '../screens/MapList';
+import AuthScreen from './../screens/AuthScreen'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator, DrawerContentScrollView,  DrawerItemList, DrawerItem } from '@react-navigation/drawer';
-import * as siteActions from '../redux-store/actions/site-actions';
+import * as SiteActions from '../redux-store/actions/site-actions';
 import {useSelector , useDispatch} from 'react-redux';
 
 
 const Tab = createBottomTabNavigator();
 const SiteListDrawer = createDrawerNavigator();
 
-
-
-
 const CustomDrawerContent = (props) =>{
       const dispatch = useDispatch();
       const siteList = useSelector( state =>state.site.siteList);
+      const selectedMap = useSelector(state =>state.map.selectedMap);
+    
+
+      useEffect(()=>{
+            if ( ! selectedMap.MapID )
+                   return;
+            SiteActions.fetchSites(selectedMap.MapID)
+       },[selectedMap])
+
+
       return (
                   <DrawerContentScrollView {...props}>
                         {
@@ -54,15 +62,25 @@ const TabNavigatorComponent = ( )=>{
       )
 }
 
-const Drawer = ()=>{
+const Drawer = ({route, navigation})=>{
+
+      const authenticatedMember = useSelector(state =>state.auth.authenticatedMember);
+      let defaultRoute = authenticatedMember === null ? "Authentication":"Tabs";
+   
+
+     
       return (
                   <SiteListDrawer.Navigator 
-                        initialRouteName="Tabs"
+                        initialRouteName={defaultRoute}
                          drawerContent={props => <CustomDrawerContent {...props} />}
                   >
                         <SiteListDrawer.Screen
                               name="Tabs"
                               component={TabNavigatorComponent}
+                        />
+                        <SiteListDrawer.Screen
+                              name="Authentication"
+                              component={AuthScreen}
                         />
                                    
                   </SiteListDrawer.Navigator>
