@@ -10,17 +10,17 @@ import LeftButton from './../components/LeftButton';
 
 
 const SiteScreen = ( {route, navigation })=>{
-      const [activeSite, setActiveSite] = useState({})
-      const siteList = useSelector( state=>state.site.siteList);
-      const [propList, setPropList] = useState([])
+      const selectedSite = useSelector( state=> state.site.selectedSite)
+      const [propList, setPropList] = useState([]);// for now since we are lazy 
 
       useEffect(() => {
-           // let siteId = JSON.stringify(route.params.siteId);
-           // console.log('selected site', siteId)
-            // let selected = siteList.find( s=>s.SiteID === parseInt(siteId));
-            // setActiveSite(selected);
-            // setPropList(Object.entries(selected))
-      }, [route.params?.siteId]);
+
+            if(selectedSite === undefined)
+            return;
+            console.log('site', selectedSite.Name)
+          
+            setPropList(Object.entries(selectedSite))
+      }, [selectedSite]);
 
 
 
@@ -29,11 +29,11 @@ const SiteScreen = ( {route, navigation })=>{
                   <Header
                         leftComponent={<LeftButton  handleClick={toggleDrawer} />}
                         placement="center"
-                        centerComponent={{ text: 'Site Name', style: { color: '#fff' } }}
+                        centerComponent={{ text: selectedSite.Name, style: { color: '#fff' } }}
                   />
                   <Card>
                         <View>
-                              <Text h3 >{activeSite.Name}</Text>
+                         
                               <Button
                                     title="Add To Calendar"
                                     onPress={() => navigation.navigate('Calendar')}

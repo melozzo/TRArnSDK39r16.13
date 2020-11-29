@@ -1,4 +1,5 @@
 to create a new expo app type
-
+# TRArnSDK39r16.13
+update to latest expo sdk and react version 11/15/20
 expo init [app-name] --npm 
 the --npm means it uses npm to install packages and not yarn

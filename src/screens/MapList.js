@@ -11,7 +11,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 const MapList = ( {navigation})=>{
       
-      let memberId=46996;
+      let member= useSelector(state => state.auth.authenticatedMember)
 
       const maplist = useSelector( state =>state.map.mapList);
    
@@ -19,8 +19,8 @@ const MapList = ( {navigation})=>{
 
       
       useEffect(()=>{
-            dispatch(mapActions.fetchMaps(memberId))
-      },[])
+            dispatch(mapActions.fetchMaps(member.MemberID))
+      },[member])
 
       const renderItem = ({ item }) => {
             console.log(item.CreateDate)
@@ -57,8 +57,8 @@ const MapList = ( {navigation})=>{
 
 
       function selectMap(map){
-            dispatch(siteActions.fetchSites(map.MapID))
-            navigation.navigate('Map',{screen:"Map", params:{mapId:map.MapID}});
+            dispatch({type:mapActions.SET_MAP, selectedMap:map})
+            navigation.navigate('Map',{screen:"Map"});
       }
     
       async function storeData (mapId) {

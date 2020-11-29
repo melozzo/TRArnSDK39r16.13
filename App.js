@@ -7,12 +7,13 @@ import RootNavigation from './src/components/RootNavigation';
 import {Provider} from 'react-redux';
 import mapReducer from './src/redux-store/reducers/map-reducer';
 import siteReducer from './src/redux-store/reducers/site-reducer';
+import authReducer from './src/redux-store/reducers/auth-reducer';
 
 import { StyleSheet } from 'react-native';
 
 export default function App() {
      
-      const rootReducer = combineReducers({map:mapReducer, site:siteReducer})
+      const rootReducer = combineReducers({map:mapReducer, site:siteReducer, auth: authReducer})
       const store = createStore(rootReducer, applyMiddleware(thunk))
    
 

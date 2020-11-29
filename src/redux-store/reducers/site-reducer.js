@@ -1,8 +1,10 @@
 import * as SiteActions from './../actions/site-actions';
-import { ActionSheetIOS } from 'react-native';
+
+
+
 const initialState = {
       siteList:[],
-      activeSite:null
+      selectedSite:{Name:'godzilla'}
 }
 
 function siteReducer( state = initialState, action ){
@@ -11,7 +13,13 @@ function siteReducer( state = initialState, action ){
             case SiteActions.SET_SITES:
                   return {
                         siteList:action.sites,
-                        activeSite:action.sites[0]
+                        selectedSite:action.sites[0]
+                  }
+
+            case SiteActions.SET_SITE:
+                  return {
+                        siteList: state.siteList,
+                        selectedSite: action.selectedSite
                   }
             default: 
                   return state;

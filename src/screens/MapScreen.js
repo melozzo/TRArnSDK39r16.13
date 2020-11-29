@@ -11,24 +11,12 @@ import Constants from 'expo-constants';
 import ModalPrompt from './../components/ModalPrompt'
 import * as siteActions from './../redux-store/actions/site-actions';
 import { ListItem, Header } from 'react-native-elements'
-import { Fontisto } from '@expo/vector-icons'; 
-import { Button } from 'react-native-elements';
-import LeftButton from './../components/LeftButton'
+
+import LeftButton from './../components/LeftButton';
+import CurrentLocation from './../components/CurrentLocation'
 //import AsyncStorage from '@react-native-community/async-storage';
 
 
-
-const CurrentLocationComponent=(props)=>{
-      const {getLocation} = props;
-      return <Button
-     iconRight
-      icon={<Fontisto name="map-marker" size={24} color="black" />}
-      title="Locate  "
-      onPress={() => {
-         getLocation();
-                  }}
-    />
-}
 
 
 
@@ -37,8 +25,10 @@ const MapScreen = ( {route, navigation})=>{
       let memberId=46996;// email white@album pwd snow
       const dispatch = useDispatch();
       const laCarte = useRef(null);
-      const [mapId, setMapId] = useState(22364);
+
+      const selectedMap = useSelector( state => state.map.selectedMap)
       let siteList = useSelector( state=> state.site.siteList);
+
    //   const [currentLocation, setCurrentLocation] = useState({latitude:0,longitude:0});
       const [savePromptVisible, setSavePromptVisible]= useState(false);
       const [defaultRegion, setDefaultRegion] = useState();
@@ -47,8 +37,10 @@ const MapScreen = ( {route, navigation})=>{
 
 
       useEffect(()=>{
-            dispatch(siteActions.fetchSites(mapId))
-      },[])
+            if(selectedMap === undefined)
+                  return;
+            dispatch(siteActions.fetchSites(selectedMap.MapID))
+      },[selectedMap])
 
 //      useEffect(()=>{
 //             if(!route.params ){
@@ -85,7 +77,7 @@ const MapScreen = ( {route, navigation})=>{
                         leftComponent={<LeftButton  handleClick={toggleDrawer} />}
                         placement="center"
                         centerComponent={{ text: 'My Map', style: { color: '#fff' } }}
-                        rightComponent={ <CurrentLocationComponent getLocation={getCurrentLocation}/> }></Header>
+                        rightComponent={ <CurrentLocation getLocation={getCurrentLocation}/> }></Header>
                   
                   <MapView style={{position:'absolute',top:'0',left:'0',right:'0',bottom:'20'}}
                         ref={laCarte}
