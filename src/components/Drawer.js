@@ -37,7 +37,7 @@ const CustomDrawerContent = (props) =>{
 
       function handleSiteSelected(site){
             props.navigation.navigate("Site")
-            dispatch({type:siteActions.SET_SITE, selectedSite:site})
+            dispatch({type:SiteActions.SET_SITE, selectedSite:site})
       }      
 }
 

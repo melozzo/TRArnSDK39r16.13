@@ -21,6 +21,7 @@ function siteReducer( state = initialState, action ){
                         siteList: state.siteList,
                         selectedSite: action.selectedSite
                   }
+            
             default: 
                   return state;
             

@@ -1,5 +1,6 @@
 export const SET_SITES = 'SET_SITES';
 export const SET_SITE = 'SET_SITE';
+export const SITE_CREATED = 'SITE_CREATED';
 
 const baseURL= 'http://138.68.12.0:8080';  //'http://localhost:7070'
 
@@ -24,4 +25,23 @@ export const fetchSites = (mapId)=>{
                   throw err;
             }
       }
+}
+
+
+export const createSite = ( site ) =>{
+      console.log('in create site', site)
+      return async dispatch => {
+            const response = await fetch(`${baseURL}/site/create`,
+            {
+                  method:'POST',
+                  headers:{'Content-Type':'application/json'},
+                  body: site
+            });
+            if(! response.ok)
+                  console.log( 'createing site failed');
+            const data = await response.json();
+            dispatch(fetchSites(site.MapID));
+            dispatch({type:SET_SITE, selectedSite: data})
+      }
+
 }

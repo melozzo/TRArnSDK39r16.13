@@ -13,7 +13,6 @@ const modalStyles = StyleSheet.create({
           alignItems: 'center',
           backgroundColor: 'transparent',
           height:height
-      
       },
       modalContainer: {  
           backgroundColor: 'white',
