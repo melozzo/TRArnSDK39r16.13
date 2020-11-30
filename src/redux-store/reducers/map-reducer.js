@@ -2,10 +2,7 @@ import {SET_MAPS, SET_MAP } from './../actions/map-actions'
 
 const initialState = {
       mapList:[],
-      selectedMap:{
-            MapID:null,
-            MapName:''
-      }
+      selectedMap:null
 
 };
 
@@ -18,10 +15,10 @@ function mapReducer( state = initialState, action ){
                        selectedMap:state.selectedMap
                  }
             case SET_MAP:
-                  console.log("setting map")
+                  console.log("setting map", action.selectedMap)
                   return {
                         mapList:state.mapList,
-                        selectedMap:action.map
+                        selectedMap:action.selectedMap
                   }
            
             default:

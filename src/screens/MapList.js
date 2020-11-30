@@ -18,11 +18,13 @@ const MapList = ( {navigation})=>{
 
       
       useEffect(()=>{
+            if(!member)
+                  return;
             dispatch(mapActions.fetchMaps(member.MemberID))
       },[member])
 
       const renderItem = ({ item }) => {
-            console.log(item.CreateDate)
+            
             return(
                   <ListItem
                   bottomDivider

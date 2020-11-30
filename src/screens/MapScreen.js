@@ -5,7 +5,7 @@ import {useSelector, useDispatch } from 'react-redux';
 import {  View, Dimensions, Modal, StyleSheet, ActivityIndicator, Text} from 'react-native';
 import {styles} from '../styles/Styles'
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
-import * as mapActions from './../redux-store/actions/map-actions';
+import * as MapActions from './../redux-store/actions/map-actions';
 import * as Location from 'expo-location';
 import Constants from 'expo-constants';
 import ModalPrompt from './../components/ModalPrompt'
@@ -24,7 +24,7 @@ import CurrentLocation from './../components/CurrentLocation'
 const MapScreen = ( {route, navigation})=>{
       const dispatch = useDispatch();
       const laCarte = useRef(null);
-      const selectedMap = useSelector( state => state.map.selectedMap)
+   
       let siteList = useSelector( state=> state.site.siteList);
 
    //   const [currentLocation, setCurrentLocation] = useState({latitude:0,longitude:0});
@@ -33,12 +33,8 @@ const MapScreen = ( {route, navigation})=>{
       const [coordList, setCoordList] = useState([]);
       const [showSpinner, setShowSpinner] = useState(false);
 
-
-      // useEffect(()=>{
-      //   if ( !selectedMap.MapID)
-      //       return;
-      //       dispatch(siteActions.fetchSites(selectedMap.MapID))
-      // },[selectedMap])
+    
+    
 
 //      useEffect(()=>{
 //             if(!route.params ){
@@ -58,6 +54,8 @@ const MapScreen = ( {route, navigation})=>{
 //       },[route.params?.mapId]);
 
       useEffect(()=>{
+            if ( siteList.length === 0 )
+                  return;
             let coords = [];
             for( let i=0; i< siteList.length; i++){
                   let marker = siteList[i];

@@ -17,16 +17,7 @@ const SiteListDrawer = createDrawerNavigator();
 const CustomDrawerContent = (props) =>{
       const dispatch = useDispatch();
       const siteList = useSelector( state =>state.site.siteList);
-      const selectedMap = useSelector(state =>state.map.selectedMap);
-    
-
-      useEffect(()=>{
-            if ( ! selectedMap.MapID )
-                   return;
-            SiteActions.fetchSites(selectedMap.MapID)
-       },[selectedMap])
-
-
+     
       return (
                   <DrawerContentScrollView {...props}>
                         {
