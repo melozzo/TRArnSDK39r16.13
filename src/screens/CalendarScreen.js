@@ -1,89 +1,54 @@
 import React, {useState, useEffect} from 'react';
-import { Platform, Text, View, Button,} from 'react-native';
-//import * as Calendar from 'expo-calendar';     
-//import SimplerDatePicker from '@cawfree/react-native-simpler-date-picker';
-//import TimePicker from 'react-native-simple-time-picker';
+import { Platform, Text, View, Button,Dimensions} from 'react-native';
+import { Header} from 'react-native-elements'
+import LeftButton from './../components/LeftButton';
+import {StyleSheet, ScrollView,  TouchableOpacity} from 'react-native';
+import WeeklyCalendar from 'react-native-weekly-calendar';
 
-import Moment from 'moment'
+const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }
+    });
 
-const CalendarScreen = ( props )=>{
-      const [date, setDate] = useState(Date.now);
-      const [mode, setMode] = useState('date');
-      const [show, setShow] = useState(true);
+const CalendarScreen = ( {route, navigation} )=>{
+      const [selectedDate, setSelectedDate] = useState(new Date().toLocaleString());
+      const sampleEvents = [
+            { 'start': '2020-03-23 09:00:00', 'duration': '00:20:00', 'note': 'Walk my dog' },
+            { 'start': '2020-03-24 14:00:00', 'duration': '01:00:00', 'note': 'Doctor\'s appointment' },
+            { 'start': '2020-03-25 08:00:00', 'duration': '00:30:00', 'note': 'Morning exercise' },
+            { 'start': '2020-03-25 14:00:00', 'duration': '02:00:00', 'note': 'Meeting with client' },
+            { 'start': '2020-03-25 19:00:00', 'duration': '01:00:00', 'note': 'Dinner with family' },
+            { 'start': '2020-03-26 09:30:00', 'duration': '01:00:00', 'note': 'Schedule 1' },
+            { 'start': '2020-03-26 11:00:00', 'duration': '02:00:00', 'note': 'Schedule 2' },
+            { 'start': '2020-03-26 15:00:00', 'duration': '01:30:00', 'note': 'Schedule 3' },
+            { 'start': '2020-03-26 18:00:00', 'duration': '02:00:00', 'note': 'Schedule 4' },
+            { 'start': '2020-03-26 22:00:00', 'duration': '01:00:00', 'note': 'Schedule 5' }
+          ]
+               
+  
 
-      // useEffect(() => {
-      //       (async () => {
-      //         const { status } = await Calendar.requestCalendarPermissionsAsync();
-      //         if (status === 'granted') {
-      //           const calendars = await Calendar.getCalendarsAsync();
-      //           console.log('Here are all your calendars:');
-      //           console.log({ calendars });
-      //         }
-      //       })();
-      //     }, []);
-
-
-          return (
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: '#ffffff',
-                alignItems: 'center',
-                justifyContent: 'space-around',
-              }}>
-          <Text style={{color:'white',fontSize:30}}>you suck</Text>
-          {/* <SimplerDatePicker
-                        minDate={Moment('1/1/2019')}
-                        maxDate={Moment('1/1/2022')}
-                        onDatePicked={  onChange   } /> */}
-            {/* <TimePicker
-                  selectedHours={12}
-                  selectedMinutes={12}
-                  onChange={(hours, minutes) => {alert(hours + minutes )}}
-            />                      */}
+return (
+            <View>
+                  <Header
+                        leftComponent={<LeftButton  handleClick={toggleDrawer} />}
+                        placement="center"
+                        centerComponent={{ text: 'Calendar',style: { color: '#fff' } }}
+                  />
+                 <WeeklyCalendar events={sampleEvents} style={{ height: 700 }} />
             </View>
-          )
+  );
 
-      function showDatepicker () {
-            setShow(true);
-            setMode('date');
-      };
-
-     function showTimepicker(){
-            setShow(true);
-            setMode('time');
-      };
-
-      function onChange ( ) {
-            alert('you selected a date')
-           // const currentDate = selectedDate || date;
-           // setShow(Platform.OS === 'ios');
-           // setDate(currentDate);
-      };
-
-      async function getDefaultCalendarSource() {
-      const calendars = await Calendar.getCalendarsAsync();
-      const defaultCalendars = calendars.filter(each => each.source.name === 'Default');
-      return defaultCalendars[0].source;
-      }
       
-      async function createCalendar() {
-      const defaultCalendarSource =
-            Platform.OS === 'ios'
-            ? await getDefaultCalendarSource()
-            : { isLocalAccount: true, name: 'Traveloggia Calendar' };
-      const newCalendarID = await Calendar.createCalendarAsync({
-            title: 'Traveloggia Calendar',
-            color: 'blue',
-            entityType: Calendar.EntityTypes.EVENT,
-            sourceId: defaultCalendarSource.id,
-            source: defaultCalendarSource,
-            name: 'internalCalendarName',
-            ownerAccount: 'personal',
-            accessLevel: Calendar.CalendarAccessLevel.OWNER,
-      });
-      console.log(`Your new calendar ID is: ${newCalendarID}`);
+
+      function toggleDrawer(){
+            navigation.toggleDrawer();// navigation events bubble up
       }
+
+    
 
 }
 export default CalendarScreen;

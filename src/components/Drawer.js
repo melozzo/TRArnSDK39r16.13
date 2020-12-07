@@ -4,12 +4,37 @@ import MapScreen from '../screens/MapScreen';
 import SiteScreen from '../screens/SiteScreen';
 import JournalView from '../screens/JournalView';
 import MapList from '../screens/MapList';
-import AuthScreen from './../screens/AuthScreen'
+import AuthScreen from './../screens/AuthScreen';
+import CalendarScreen from './../screens/CalendarScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator, DrawerContentScrollView,  DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import * as SiteActions from '../redux-store/actions/site-actions';
 import {useSelector , useDispatch} from 'react-redux';
+import { createStackNavigator } from '@react-navigation/stack';
+import HeaderContainer from './HeaderContainer';
+var tinycolor = require("tinycolor2")
 
+
+const Stack = createStackNavigator();
+
+const SiteStack = () => {
+  return (
+  
+      <Stack.Navigator initialRouteName="Calendar"
+    
+      
+      >
+       
+            <Stack.Screen name="Calendar" options={{headerShown:false}}  component={CalendarScreen}  />
+            <Stack.Screen name="Site"    options={{headerShown:false}} component={SiteScreen}
+            
+            />
+      </Stack.Navigator>
+    
+  );
+
+  
+};
 
 const Tab = createBottomTabNavigator();
 const SiteListDrawer = createDrawerNavigator();
@@ -36,7 +61,7 @@ const CustomDrawerContent = (props) =>{
 
 
       function handleSiteSelected(site){
-            props.navigation.navigate("Site")
+            props.navigation.navigate("Calendar", {screen:"Site"})
             dispatch({type:SiteActions.SET_SITE, selectedSite:site})
       }      
 }
@@ -47,7 +72,7 @@ const TabNavigatorComponent = ( )=>{
                   <Tab.Screen name="MapList" component={MapList} />
                   <Tab.Screen name="Map" component={MapScreen}/>
                   <Tab.Screen name="Album" component={AlbumScreen} />
-                  <Tab.Screen name="Site" component={SiteScreen} />
+                  <Tab.Screen name="Calendar" component={SiteStack} />
                   <Tab.Screen name="Journal" component={JournalView} />
             </Tab.Navigator>
       )
@@ -62,7 +87,7 @@ const Drawer = ({route, navigation})=>{
      
       return (
                   <SiteListDrawer.Navigator 
-                        initialRouteName={defaultRoute}
+                         initialRouteName={defaultRoute}
                          drawerContent={props => <CustomDrawerContent {...props} />}
                   >
                         <SiteListDrawer.Screen
