@@ -11,19 +11,17 @@ import { createDrawerNavigator, DrawerContentScrollView,  DrawerItemList, Drawer
 import * as SiteActions from '../redux-store/actions/site-actions';
 import {useSelector , useDispatch} from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import {Button} from 'react-native-elements';
+import {  View} from 'react-native';
 const Stack = createStackNavigator();
 
 const SiteStack = () => {
   return (
-  
       <Stack.Navigator initialRouteName="Calendar">
             <Stack.Screen name="Calendar" options={{headerShown:false}}  component={CalendarScreen}  />
             <Stack.Screen name="Site"    options={{headerShown:false}} component={SiteScreen}/>
       </Stack.Navigator>
   );
-
-  
 };
 
 const Tab = createBottomTabNavigator();
@@ -33,9 +31,6 @@ const CustomDrawerContent = (props) =>{
       const dispatch = useDispatch();
       const selectedMap = useSelector(state=> state.map.selectedMap);
       const siteList = useSelector( state =>state.site.siteList);
-
-
-
       useEffect(()=>{
             if( ! selectedMap )
                  return;
@@ -45,6 +40,14 @@ const CustomDrawerContent = (props) =>{
      
       return (
                   <DrawerContentScrollView {...props}>
+                        <View style={{display:'flex',justifyContent:'flex-end'}}>
+                        <Button
+                              title="Change User"
+                              type="outline"
+                              onPress={handleAuthorize }
+                              />
+                        </View>
+                       
                         {
                               siteList.length >0 &&   siteList.map((site,i)=>{
                                     return   (
@@ -59,6 +62,11 @@ const CustomDrawerContent = (props) =>{
                   </DrawerContentScrollView>
             );
 
+
+      function handleAuthorize(){
+            console.log('auth button pressed'); 
+            props.navigation.navigate("Authentication");
+      }
 
       function handleSiteSelected(site){
             props.navigation.navigate("Calendar", {screen:"Site"})
@@ -82,9 +90,6 @@ const Drawer = ({route, navigation})=>{
 
       const authenticatedMember = useSelector(state =>state.auth.authenticatedMember);
       let defaultRoute = authenticatedMember === null ? "Authentication":"Tabs";
-   
-
-     
       return (
                   <SiteListDrawer.Navigator 
                          initialRouteName={defaultRoute}

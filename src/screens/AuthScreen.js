@@ -96,6 +96,9 @@ const AuthScreen = ( {route, navigation} )=>{
                         dispatch( AuthActions.login(email, password))
 
                   break;
+                  case 2: {
+                        navigation.navigate("Map")
+                  }
 
             }
       }
