@@ -27,10 +27,6 @@ const AlbumScreen= ( {route, navigation})=>{
                         placement="center"
                         centerComponent={{ text: 'Album', style: { color: '#fff' } }}
                   />
-                
-                  
-
-
                   <View style={{ height:200, alignItems: 'center', justifyContent: 'center' }}>
                         <Button title="Pick an image from camera roll" onPress={pickImage} />
                         {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}

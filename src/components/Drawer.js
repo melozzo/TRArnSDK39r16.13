@@ -11,26 +11,16 @@ import { createDrawerNavigator, DrawerContentScrollView,  DrawerItemList, Drawer
 import * as SiteActions from '../redux-store/actions/site-actions';
 import {useSelector , useDispatch} from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
-import HeaderContainer from './HeaderContainer';
-var tinycolor = require("tinycolor2")
-
 
 const Stack = createStackNavigator();
 
 const SiteStack = () => {
   return (
   
-      <Stack.Navigator initialRouteName="Calendar"
-    
-      
-      >
-       
+      <Stack.Navigator initialRouteName="Calendar">
             <Stack.Screen name="Calendar" options={{headerShown:false}}  component={CalendarScreen}  />
-            <Stack.Screen name="Site"    options={{headerShown:false}} component={SiteScreen}
-            
-            />
+            <Stack.Screen name="Site"    options={{headerShown:false}} component={SiteScreen}/>
       </Stack.Navigator>
-    
   );
 
   
@@ -41,7 +31,17 @@ const SiteListDrawer = createDrawerNavigator();
 
 const CustomDrawerContent = (props) =>{
       const dispatch = useDispatch();
+      const selectedMap = useSelector(state=> state.map.selectedMap);
       const siteList = useSelector( state =>state.site.siteList);
+
+
+
+      useEffect(()=>{
+            if( ! selectedMap )
+                 return;
+           dispatch(SiteActions.fetchSites(selectedMap.MapID))
+      },[selectedMap])
+
      
       return (
                   <DrawerContentScrollView {...props}>

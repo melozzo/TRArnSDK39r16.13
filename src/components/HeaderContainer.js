@@ -10,16 +10,10 @@ const HeaderContainer = ( {navigation})=>{
 
       return (
             <Header 
-                 
-            
             >
                   
                   <LeftButton  handleClick={toggleDrawer} />
-                      
-               
-                       
-                       
-                  
+
             </Header>
       )
 
