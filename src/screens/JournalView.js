@@ -7,9 +7,6 @@ import { Header } from 'react-native-elements';
 
 
 const JournalView = ( props)=>{
-      
-
-      
 
       return (
             <View style={styles.screen}>
@@ -26,7 +23,7 @@ const JournalView = ( props)=>{
             );
 
       function toggleDrawer(){
-            navigation.toggleDrawer();
+            props.navigation.toggleDrawer();
       }
 
 
